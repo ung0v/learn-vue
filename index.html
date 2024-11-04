@@ -1,47 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Vue.js Slots Fundamentals</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 </head>
 
 <body>
-  <div id="app">
-    <h1>Vue.js Slots Fundamentals</h1>
-    <todo-item>
-      Buy Bananas
-      <template #description>
-        <p>Bananas are good for your health</p>
-      </template>
-      <template #button-text>
-        Make it nice
-      </template>
-    </todo-item>
-    <todo-item>Eat Bananas</todo-item>
-    <todo-item>Celebrate!</todo-item>
-  </div>
 
-  <script type="text/x-template" id="todo-item-template">
-    <div>
-      <input type="checkbox" v-model="done">
-      <span :class="{ done }">
-        <slot></slot>
-      </span>
-      <slot name="description"></slot>
-      <button><slot name="button-text">Highlight</slot></button>
+  <div id="app" class="ui container">
+    <h1>GitHub Profiles</h1>
+    <list-github-user-card></list-github-user-card>
+  </div>
+  <script type="text/x-template" id="github-user-card-item-template">
+  <!-- Template for GitHub card -->
+  <div class="ui card">
+    <div class="image">
+      <img :src="avatar">
     </div>
+    <div class="content">
+      <a class="header" :href="link">{{username}}</a>
+      <div class="meta">
+        <span class="date">Joined in 2013</span>
+      </div>
+      <div class="description">
+        Kristy is an art director living in New York.
+      </div>
+    </div>
+    <div class="extra content">
+      <a>
+        <i class="user icon"></i>
+        22 Friends
+      </a>
+    </div>
+  </div>
   </script>
-  <style>
-    .done{
-      color:green;
-      text-decoration: line-through;
-    }
-  </style>
+
+  <script type="text/x-template" id="list-github-user-card-template">
+      <template v-if="list.length > 0">
+        <github-user-card-item 
+        v-for="item of list" 
+        :username="item?.login"
+        :avatar="item?.avatar_url"
+        :link="item?.html_url"
+        ></github-user-card-item>
+      </template>
+   </script>
+
+  <!-- Import Vue.js and axios -->
   <script src="https://unpkg.com/vue@3"></script>
-  <script src="app.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <!-- Your JavaScript Code :) -->
+  <script>
+    const GithubUserCardItem = {
+      template: '#github-user-card-item-template',
+      props: {
+        username: { type: String, default: "", required: true },
+        avatar: { type: String, default: "", required: true },
+        link: { type: String, default: "", required: true }
+      }
+    }
+
+    Vue.createApp({})
+      .component('list-github-user-card', {
+        components: { 'github-user-card-item': GithubUserCardItem },
+        template: '#list-github-user-card-template',
+        data() {
+          return {
+            list: []
+          }
+        },
+        async created() {
+          try {
+            const res = await axios('https://api.github.com/users');
+            this.list = res.data;
+          } catch (error) {
+            
+          }
+        }
+      })
+      .mount('#app')
+  </script>
 </body>
 
 </html>
