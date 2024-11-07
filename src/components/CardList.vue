@@ -1,8 +1,10 @@
 <template>
-  <div class="flex flex-col gap-y-4">
-    <card-item v-for="card in cards" :key="card.desc" :desc="card.desc"></card-item>
-    <add-new-card :column-id="columnId"></add-new-card>
-  </div>
+  <draggable tag="child" class="flex flex-col gap-y-4" :list="cards" group="people" item-key="desc">
+    <template #item="{ element }">
+      <card-item :desc="element.desc"></card-item>
+    </template>
+  </draggable>
+  <add-new-card :column-id="columnId" class="mt-4"></add-new-card>
 </template>
 
 <script>
@@ -10,13 +12,15 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 import CardItem from './CardItem.vue';
 import AddNewCard from './AddNewCard.vue';
+import draggable from 'vuedraggable';
 export default {
   props: {
     columnId: Number
   },
   components: {
     CardItem,
-    AddNewCard
+    AddNewCard,
+    draggable
   },
   setup(props) {
     const store = useStore();

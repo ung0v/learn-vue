@@ -8,23 +8,59 @@ export const store = createStore({
         {
           id: 1,
           label: 'To Do',
-          childrens: [{
-            desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer viverra venenatis accumsan."
-          }]
+          childrens: [
+            {
+              desc: "Research and outline project requirements for initial phase."
+            },
+            {
+              desc: "Prepare documentation for the user authentication module."
+            },
+            {
+              desc: "Set up initial database schema and relationships."
+            }
+          ]
         },
         {
           id: 2,
           label: 'In Progress',
-          childrens: [{
-            desc: ""
-          }]
+          childrens: [
+            {
+              desc: "Develop the frontend UI components for the dashboard."
+            },
+            {
+              desc: "Integrate third-party API for payment processing."
+            }
+          ]
         },
         {
           id: 3,
+          label: 'Review',
+          childrens: [
+            {
+              desc: "Code review for user registration and login flows."
+            },
+            {
+              desc: "Review database migrations and data seeding scripts."
+            }
+          ]
+        },
+        {
+          id: 4,
           label: 'Done',
-          childrens: []
+          childrens: [
+            {
+              desc: "Completed project setup and initial configurations."
+            },
+            {
+              desc: "Installed necessary dependencies and libraries."
+            },
+            {
+              desc: "Tested initial project setup on local environment."
+            }
+          ]
         }
       ]
+
     }
   },
   mutations: {

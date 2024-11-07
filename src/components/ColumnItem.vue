@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-[#DDDFE7] max-w-[240px] min-w-[240px] min-h-[440px] rounded">
+  <div class="ml-4 p-4 bg-[#DDDFE7] max-w-[240px] min-w-[240px] min-h-[440px] rounded">
     <div class="flex flex-col gap-y-3">
       <form @submit.prevent="editColumn" v-if="isEdit" class="flex gap-x-2 items-center">
         <input v-model.lazy.trim="label"
@@ -8,7 +8,7 @@
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1">Done</button>
       </form>
       <h3 v-else @click="toggleEdit"
-        class="text-base text-black uppercase font-semibold hover:bg-gray-300 transition-all cursor-pointer">{{
+        class="title text-base text-black uppercase font-semibold hover:bg-gray-300 transition-all cursor-pointer">{{
           column.label
         }}</h3>
       <card-list :column-id="column.id"></card-list>
